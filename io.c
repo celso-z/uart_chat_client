@@ -1,4 +1,3 @@
-/*
 #include <termios.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -6,13 +5,13 @@
 #include <fcntl.h>
 #include <sys/signal.h>
 #include <sys/types.h>
+#include <inttypes.h>
     
 #define BAUDRATE B9600
 #define MODEMDEVICE "/dev/ttyUSB0"
 #define _POSIX_SOURCE 1  POSIX compliant source 
 #define FALSE 0
 #define TRUE 1
-*/
 
 #include "./io.h"
         
@@ -55,31 +54,20 @@ void connection_init(){
     tcsetattr(fd,TCSANOW,&newtio);
 }
 
-void *get_package(){
+void *deserialize_package(){
     int res;
-    void *pkg = malloc(PACKAGE_SIZE * sizeof(uint8_t));
+    void *pkg = malloc(sizeof(uint32_t) * 16);
     if(pkg == NULL) return NULL;
     res = read(fd,pkg,PACKAGE_SIZE);
     return (void *) pkg;
 }
 
-int send_package(void *pkg){
+int serialize_package(void *pkg){
     int res;
     if(pkg == NULL) return -1;
     res = write(fd, pkg, PACKAGE_SIZE);
     if(res != 64) return -1;
     return 0;
-}
-        
-main()
-{
-    connection_init();
-    void *pkg = malloc(sizeof(uint8_t));
-    int ret = send_package(pkg);
-    while (1) {
-        usleep(100000);
-    }
-    tcsetattr(fd,TCSANOW,&oldtio);
 }
         
 /***************************************************************************
