@@ -48,7 +48,7 @@ void connection_init(){
     newtio.c_iflag = IGNPAR;
     newtio.c_oflag = 0;
     newtio.c_lflag = 0;
-    newtio.c_cc[VMIN] = PACKAGE_SIZE; /* Colocar aqui um valor macro do tamanho exato do pacote*/
+    newtio.c_cc[VMIN] = PACKET_SIZE - 1; /* Colocar aqui um valor macro do tamanho exato do pacote*/
     newtio.c_cc[VTIME]=0;
     tcflush(fd, TCIFLUSH);
     tcsetattr(fd,TCSANOW,&newtio);
@@ -56,9 +56,9 @@ void connection_init(){
 
 void *deserialize_package(){
     int res;
-    void *pkg = malloc(sizeof(uint32_t) * 16);
+    void *pkg = malloc(PACKET_SIZE);
     if(pkg == NULL) return NULL;
-    res = read(fd,pkg,PACKAGE_SIZE);
+    res = read(fd,pkg,PACKET_SIZE);
     return (void *) pkg;
 }
 

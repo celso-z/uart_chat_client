@@ -15,13 +15,14 @@
  * the declaration (example below) in the sources files where needed.
  ******************************************************************************/
 
+#include "./checksum.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 /* Declaration:
-extern int sha1digest(uint8_t *digest, char *hexdigest, const uint8_t *data, size_t databytes);
+extern int get_checksum(uint8_t *digest, char *hexdigest, const uint8_t *data, size_t databytes);
 */
 
 /*******************************************************************************
@@ -47,7 +48,7 @@ extern int sha1digest(uint8_t *digest, char *hexdigest, const uint8_t *data, siz
  * @return: 0 on success and non-zero on error.
  ******************************************************************************/
 int
-sha1digest(uint8_t *digest, char *hexdigest, const uint8_t *data, size_t databytes)
+get_checksum(uint8_t *digest, char *hexdigest, const uint8_t *data, size_t databytes)
 {
 #define SHA1ROTATELEFT(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 
@@ -198,4 +199,4 @@ sha1digest(uint8_t *digest, char *hexdigest, const uint8_t *data, size_t databyt
   }
 
   return 0;
-}  /* End of sha1digest() */
+}  /* End of get_checksum() */

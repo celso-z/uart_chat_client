@@ -1,6 +1,6 @@
 #ifndef IO_H_
 #define IO_H_
-#define PACKAGE_SIZE 512
+#define PACKET_SIZE 64
 
 void connection_init();
 void *deserialize_package();

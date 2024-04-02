@@ -11,7 +11,7 @@ uint32_t days_from(uint16_t y, uint8_t m, uint8_t d) {
     uint16_t yoe = (y - era * 400);      // [0, 399]
     uint16_t doy = (153*(m > 2 ? m-3 : m+9) + 2)/5 + d-1;  // [0, 365]
     uint32_t doe = yoe * 365 + yoe/4 - yoe/100 + doy;         // [0, 146096]
-    return (uint32_t)era * 146097 + doe - 719468;
+    return (uint32_t)era * 146097 + (uint32_t)doe - 719468;
 }
 
 //USES MALLOC
@@ -60,8 +60,10 @@ char *get_formatted_timestamp(uint32_t timestamp){
 }
 
 int main(int argc, char* argv[]){
+    char *str;
     uint32_t timestamp =  get_timestamp();
-    char* str = get_formatted_timestamp(timestamp);
+    printf("%" PRIu32 "\n\r", timestamp);
+    str = get_formatted_timestamp(timestamp);
     printf("%s", str);
     free(str);
     

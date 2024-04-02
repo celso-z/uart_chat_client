@@ -3,9 +3,12 @@
 #include "./time.h"
 #include <stdlib.h>
 
-int send_message(char* msg, uint16_t orig_addr, uint16_t dest_addr){
-    package_t *pkg = malloc(sizeof(uint32_t) * 16);    
+int send_message(char* msg, uint8_t orig_addr, uint8_t dest_addr){
+    package_t *pkg = malloc(sizeof(package_t));    
     if(pkg == NULL) return -1;
+    pkg->checksum = malloc(sizeof(char) * 65);
+    if(pkg->checksum == NULL) return -1;
+    if(get_checksum(NULL, pkg->checksum, (uint8_t)pkg, (size_t) 64) == -1) return -1;
     pkg->orig_addr = orig_addr;
     pkg->dest_addr = dest_addr;
     pkg->timestamp = get_y2k_timestamp();
