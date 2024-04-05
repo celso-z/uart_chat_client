@@ -74,6 +74,4 @@ int serialize_package(void *pkg){
 void signal_handler_IO (int status)
 {
     package_t *p = get_package();
-    printf("%s\n", p->msg);
-    printf("aue");
 }

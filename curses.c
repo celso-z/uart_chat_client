@@ -1,5 +1,6 @@
 #include "./curses.h"
 #include <stdlib.h>
+#include "./time.h"
 
 
 display_canvas *init_screen(){
@@ -26,7 +27,10 @@ display_canvas *init_screen(){
 
 int display_message(package_t *pkg, display_canvas *display){
     wmove(display->message_canvas, 1, 1);
-    wprintw("%s\n", pkg->msg);
+    char *str = get_formatted_timestamp(pkg->timestamp);
+    wprintw(display->message_canvas ,"%s | %d -> %d|%s\n", str, pkg->orig_addr, pkg->dest_addr, pkg->msg);
+    wrefresh(display->message_canvas);
+    free(str);
     return 0;
 }
 

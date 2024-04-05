@@ -2,6 +2,7 @@
 #include "./protocol.h"
 #include "./time.h"
 #include <stdlib.h>
+#include "./curses.h"
 
 int send_message(char* msg, uint8_t orig_addr, uint8_t dest_addr){
     package_t *pkg = malloc(PACKET_SIZE);    
@@ -32,5 +33,10 @@ package_t *get_package(){
     void *raw_data = deserialize_package();
     if(!raw_data) return NULL;
     package_t *p = decode_package(raw_data);
+    display_canvas *t = init_screen();
+    display_message(p, t);
+    getch();
+    end_screen(t);
+    
     return p;
 }
