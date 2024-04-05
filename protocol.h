@@ -3,11 +3,11 @@
 #include <inttypes.h>
 
 typedef struct {
-    char *msg; //52 bits = 51 char + '\0'
+    char msg[49]; //49 bits = 48 char + '\0'
     uint8_t orig_addr; //endereço da origem da comunicação 
     uint8_t dest_addr; //endereço de destino da comunicação
     uint32_t timestamp; //timestamp y2k
-    char *checksum;     //checksum (id) 32 bits
+    char checksum[9];     //checksum (id) 32 bits
 }package_t;
 
 int send_message(char *msg, uint8_t orig_addr, uint8_t dest_addr);

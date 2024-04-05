@@ -58,14 +58,3 @@ char *get_formatted_timestamp(uint32_t timestamp){
     free(date_fields);
     return str;
 }
-
-int main(int argc, char* argv[]){
-    char *str;
-    uint32_t timestamp =  get_timestamp();
-    printf("%" PRIu32 "\n\r", timestamp);
-    str = get_formatted_timestamp(timestamp);
-    printf("%s", str);
-    free(str);
-    
-    return 0;
-}

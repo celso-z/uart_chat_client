@@ -6,6 +6,7 @@
 #include <sys/signal.h>
 #include <sys/types.h>
 #include <inttypes.h>
+#include "./protocol.h"
     
 #define BAUDRATE B9600
 #define MODEMDEVICE "/dev/ttyUSB0"
@@ -65,18 +66,14 @@ void *deserialize_package(){
 int serialize_package(void *pkg){
     int res;
     if(pkg == NULL) return -1;
-    res = write(fd, pkg, PACKAGE_SIZE);
-    if(res != 64) return -1;
+    res = write(fd, pkg, PACKET_SIZE);
+    if(res != PACKET_SIZE) return -1;
     return 0;
 }
-        
-/***************************************************************************
-* signal handler. sets wait_flag to FALSE, to indicate above loop that     *
-* characters have been received.                                           *
-***************************************************************************/
-        
+
 void signal_handler_IO (int status)
 {
-    printf("received SIGIO signal.\n");
-    get_package();
+    package_t *p = get_package();
+    printf("%s\n", p->msg);
+    printf("aue");
 }

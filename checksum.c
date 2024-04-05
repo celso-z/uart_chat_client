@@ -17,7 +17,6 @@
 
 #include "./checksum.h"
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -194,7 +193,7 @@ get_checksum(uint8_t *digest, char *hexdigest, const uint8_t *data, size_t datab
   /* Store hex version of digest in supplied buffer */
   if (hexdigest)
   {
-    snprintf (hexdigest, 32, "%08x",
+    snprintf (hexdigest, 9, "%08x",
               H[0]); //TRUCATED OUTPUT FOR MEMORY REASONS
   }
 
